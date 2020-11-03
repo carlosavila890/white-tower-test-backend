@@ -1,0 +1,20 @@
+{
+  "name": "white_tower_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "keywords": [],
+  "author": "carlosavila890",
+  "license": "ISC",
+  "dependencies": {
+    "express": "",
+    "express-graphql": "^0.11.0",
+    "graphql": "^15.4.0",
+    "mongodb": "^3.6.2",
+    "validator": "^13.1.17"
+  }
+}

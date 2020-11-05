@@ -1,20 +1,27 @@
 {
-  "name": "white_tower_test",
+  "name": "white-tower-test-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Contacts List test project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon index"
   },
   "keywords": [],
   "author": "carlosavila890",
   "license": "ISC",
   "dependencies": {
+    "@types/chai": "^4.2.14",
     "express": "",
     "express-graphql": "^0.11.0",
+    "faker": "^5.1.0",
     "graphql": "^15.4.0",
+    "lodash": "^4.17.20",
     "mongodb": "^3.6.2",
     "validator": "^13.1.17"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
   }
 }

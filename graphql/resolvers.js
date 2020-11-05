@@ -1,36 +1,6 @@
 const Contact = require('../models/contact');
-const validator = require('validator')
-
-function validateContactInput(contactInput) {
-  const errors = [];
-
-  if (!validator.isEmail(contactInput.email)) {
-    errors.push({message: 'Email is invalid'});
-  }
-
-  if (validator.isEmpty(contactInput.name)) {
-    errors.push({message: 'Name is required'});
-  }
-
-  if (validator.isEmpty(contactInput.address)) {
-    errors.push({message: 'Address is required'});
-  }
-
-  if (validator.isEmpty(contactInput.email)) {
-    errors.push({message: 'Email is required'});
-  }
-
-  if (errors.length > 0) {
-    throwError(errors)
-  }
-}
-
-function throwError(errors){
-  const error = new Error('Invalid contact');
-  error.data = errors;
-  error.code = 422;//Unprocessable Entity
-  throw error;
-}
+const validateContactInput = require('../validations/contact_validations').validateContactInput;
+const throwError = require('../validations/contact_validations').throwError;
 
 module.exports = {
   GetContactList: async function () {
@@ -62,6 +32,7 @@ module.exports = {
 
     const contact = new Contact(contactInput.name, contactInput.address, contactInput.phoneNumber, contactInput.email);
     const contactId = await contact.create();
+
     return {
       'contactId': contactId
     };
@@ -102,6 +73,7 @@ module.exports = {
     else{
       throwError([{message: 'Contact not exists'}]);
     }
+
     return {
       'code': 200,
       'message': 'OK'

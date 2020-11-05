@@ -30,7 +30,7 @@ app.get('/mock', (req, res) => {
         name: user.firstName() + " " + user.lastName(),
         address: address.city(),
         email: faker.internet.email().toLowerCase(),
-        phoneNumber: phone.phoneNumber('########')
+        phoneNumber: parseInt(phone.phoneNumber('########'))
       };
     })
   );

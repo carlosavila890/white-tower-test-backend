@@ -2,7 +2,7 @@ const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
   type Query {
-    GetContactList(page: Int!, pageSize: Int!, search: [String]): ContactListResult
+    GetContactList(page: Int!, pageSize: Int!, search: [String], sortBy: String, sortDirection: String): ContactListResult
     GetContact(contactId: String!): Contact
   }
 

@@ -12,24 +12,32 @@ module.exports = class Contact{
         this._id = contactId ? new mongodb.ObjectId(contactId) : null;
     }
 
-    static findAll(page, pageSize, search) {
+    static findAll(page, pageSize, search, sortBy, sortDirection) {
         var from = 0;
         if (page > 0) {
             from = page * pageSize;
         }
 
+        if (sortBy === "" || sortBy === undefined)
+            sortBy = "name";
+
         var options = {
             "limit": pageSize,
-            "skip": from,
-            //"sort": [['field1','asc'], ['field2','desc']]
-            //"sort": "name"
+            "skip": from
         }
+
+        let mysort = { };
+        //Sort
+        //  1 -> asc
+        // -1 -> desc
+        mysort[sortBy] = sortDirection === "" || sortDirection === undefined || sortDirection === "asc" ? 1 : -1;
 
         const db = getDb();
         const totalCount = db.collection(collectionName).find({}).count();
 
         return db.collection(collectionName)
             .find({}, options)
+            .sort(mysort)
             .toArray()
             .then(contacts => {
                 return {

@@ -4,7 +4,7 @@ const throwError = require('../validations/contact_validations').throwError;
 
 module.exports = {
   GetContactList: async function (args, req) {
-    return await Contact.findAll(args.page, args.pageSize, args.search);
+    return await Contact.findAll(args.page, args.pageSize, args.search, args.sortBy, args.sortDirection);
   },
 
   GetContact: async function (args, req) {

@@ -12,13 +12,30 @@ module.exports = class Contact{
         this._id = contactId ? new mongodb.ObjectId(contactId) : null;
     }
 
-    static findAll() {
+    static findAll(page, pageSize, search) {
+        var from = 0;
+        if (page > 0) {
+            from = page * pageSize;
+        }
+
+        var options = {
+            "limit": pageSize,
+            "skip": from,
+            //"sort": [['field1','asc'], ['field2','desc']]
+            //"sort": "name"
+        }
+
         const db = getDb();
+        const totalCount = db.collection(collectionName).find({}).count();
+
         return db.collection(collectionName)
-            .find()
+            .find({}, options)
             .toArray()
             .then(contacts => {
-                return contacts;
+                return {
+                    items: contacts,
+                    totalCount: totalCount
+                };
             })
             .catch(err => {
                 console.log(err);

@@ -36,6 +36,10 @@ app.get('/mock', (req, res) => {
   );
 });
 
+//Cors
+let cors = require('cors')
+app.use(cors())
+
 //Graphql
 app.use('/graphql', graphqlHTTP({
   schema: graphQlSchema,

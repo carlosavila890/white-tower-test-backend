@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/chai": "^4.2.14",
+    "cors": "^2.8.5",
     "express": "",
     "express-graphql": "^0.11.0",
     "faker": "^5.1.0",

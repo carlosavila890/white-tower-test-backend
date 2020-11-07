@@ -1,10 +1,12 @@
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
+const getMongoDBConnection = require('../config/app_settings').getMongoDBConnection;
 
 let _db;
 
 const mongoConnect = (callback) => {
-    MongoClient.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb', {useUnifiedTopology: true}
+    const mongoDBConnection = getMongoDBConnection();
+    MongoClient.connect(mongoDBConnection, {useUnifiedTopology: true}
     )
         .then(client => {
             console.log('Connected!');

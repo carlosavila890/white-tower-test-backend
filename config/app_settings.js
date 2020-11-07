@@ -27,7 +27,13 @@ const getContactsCollectionName = () => {
     return config.ContactsCollectionName;
 }
 
+const getMongoDBConnection = () => {
+    const config = getJsonConfig();
+    return config.MongoDBConnection;
+}
+
 exports.getServerPort = getServerPort;
 exports.getGraphQLEndpoint = getGraphQLEndpoint;
 exports.getMockEndpoint = getMockEndpoint;
 exports.getContactsCollectionName = getContactsCollectionName;
+exports.getMongoDBConnection = getMongoDBConnection;

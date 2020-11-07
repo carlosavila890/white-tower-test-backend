@@ -24,7 +24,7 @@ const buildListOptions = (args) => {
 
     let search = args.search.join(' ');
     const myFind = search !== "" ? { $text: { $search: search } } : {};
-    console.log(myFind);
+    //console.log(myFind);
 
     return {
         sort: mySort,

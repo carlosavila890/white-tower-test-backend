@@ -2,5 +2,6 @@
     "ServerPort": 4000,
     "GraphQLEndpoint": "/graphql",
     "MockEndpoint": "/mock",
-    "ContactsCollectionName": "contacts"
+    "ContactsCollectionName": "contacts",
+    "MongoDBConnection": "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb"
 }

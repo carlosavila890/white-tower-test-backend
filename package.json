@@ -19,6 +19,7 @@
     "graphql": "^15.4.0",
     "lodash": "^4.17.20",
     "mongodb": "^3.6.2",
+    "node-fetch": "^2.6.1",
     "validator": "^13.1.17"
   },
   "devDependencies": {

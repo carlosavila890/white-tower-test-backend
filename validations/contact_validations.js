@@ -34,6 +34,10 @@ const validateContactInput = (contactInput) => {
         errors.push({message: 'Name allows from 1 to 100 characters'});
     }
 
+    if (validator.isEmpty(contactInput.phoneNumber)) {
+        errors.push({message: 'Phone number is required'});
+    }
+
     if (errors.length > 0) {
         throwError(errors)
     }

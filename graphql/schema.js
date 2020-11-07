@@ -15,7 +15,7 @@ module.exports = buildSchema(`
   input CreateContactInputData {
     name: String!
     address: String!
-    phoneNumber: Int!
+    phoneNumber: String!
     email: String!
   }
 
@@ -23,7 +23,7 @@ module.exports = buildSchema(`
     contactId: String!
     name: String!
     address: String!
-    phoneNumber: Int!
+    phoneNumber: String!
     email: String!
   }
 
@@ -31,7 +31,7 @@ module.exports = buildSchema(`
     _id: String
     name: String
     address: String
-    phoneNumber: Int
+    phoneNumber: String
     email: String
   }
 

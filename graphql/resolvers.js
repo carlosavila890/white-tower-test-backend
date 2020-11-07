@@ -1,10 +1,12 @@
 const Contact = require('../models/contact');
 const validateContactInput = require('../validations/contact_validations').validateContactInput;
 const throwError = require('../validations/contact_validations').throwError;
+const buildListOptions = require('../util/list_options').buildListOptions;
 
 module.exports = {
   GetContactList: async function (args, req) {
-    return await Contact.findAll(args.page, args.pageSize, args.search, args.sortBy, args.sortDirection);
+    const listOptions = buildListOptions(args);
+    return await Contact.findAll(listOptions);
   },
 
   GetContact: async function (args, req) {

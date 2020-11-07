@@ -4,16 +4,15 @@ const graphQlSchema = require('./graphql/schema')
 var graphQlResolvers = require('./graphql/resolvers')
 var app = express();
 
-//Conexión a MongoDb
-const mongoConnect = require('./util/database').mongoConnect;
-mongoConnect(() => {});
-
 //Data mock
 //http://localhost:4000/mock?count=10
 const faker = require('faker');
 const _ = require('lodash');
 
-app.get('/mock', (req, res) => {
+const getMockEndpoint = require('./config/app_settings').getMockEndpoint;
+const mockEndpoint = getMockEndpoint();
+
+app.get(mockEndpoint, (req, res) => {
   const count = req.query.count;
   if (!count) {
     return res
@@ -30,18 +29,33 @@ app.get('/mock', (req, res) => {
         name: user.firstName() + " " + user.lastName(),
         address: address.city(),
         email: faker.internet.email().toLowerCase(),
-        phoneNumber: parseInt(phone.phoneNumber('########'))
+        phoneNumber: phone.phoneNumber()//parseInt(phone.phoneNumber('########'))
       };
     })
   );
+});
+
+//Conexión a MongoDb
+const mongoConnect = require('./util/database').mongoConnect;
+mongoConnect(() => {
+  //Script to create contacts mock
+  const initContacts = require('./scripts/init_contacts').initContacts;
+  const totalContacts = 15;
+  initContacts(totalContacts);
 });
 
 //Cors
 let cors = require('cors')
 app.use(cors())
 
+const getGraphQLEndpoint = require('./config/app_settings').getGraphQLEndpoint;
+const graphQLEndpoint = getGraphQLEndpoint();
+
+const getServerPort = require('./config/app_settings').getServerPort;
+const serverPort = getServerPort();
+
 //Graphql
-app.use('/graphql', graphqlHTTP({
+app.use(graphQLEndpoint, graphqlHTTP({
   schema: graphQlSchema,
   rootValue: graphQlResolvers,
   graphiql: true,
@@ -55,6 +69,6 @@ app.use('/graphql', graphqlHTTP({
     return {message: message, status: code, data: data};
   }
 }));
-app.listen(4000);
+app.listen(serverPort);
 
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+console.log('Running a GraphQL API server at http://localhost:' + serverPort + graphQLEndpoint);

@@ -9,6 +9,10 @@ const mongoConnect = (callback) => {
         .then(client => {
             console.log('Connected!');
             _db = client.db();
+
+            //Creación de índice (Es idempotente, sino existe se crea)
+            _db.collection('contacts').createIndex( { "$**": "text" } )
+
             callback();
         })
         .catch(err=> {

@@ -1,10 +1,12 @@
 const getDb = require('../util/database').getDb;
 const mongodb = require('mongodb')
 var ObjectId = require('mongodb').ObjectId;
-const collectionName = 'contacts';
+
+const getContactsCollectionName = require('../config/app_settings').getContactsCollectionName;
+var collectionName = getContactsCollectionName();
 
 module.exports = class Contact{
-   constructor(name, address, phoneNumber, email, contactId) {
+    constructor(name, address, phoneNumber, email, contactId) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -12,32 +14,13 @@ module.exports = class Contact{
         this._id = contactId ? new mongodb.ObjectId(contactId) : null;
     }
 
-    static findAll(page, pageSize, search, sortBy, sortDirection) {
-        var from = 0;
-        if (page > 0) {
-            from = page * pageSize;
-        }
-
-        if (sortBy === "" || sortBy === undefined)
-            sortBy = "name";
-
-        var options = {
-            "limit": pageSize,
-            "skip": from
-        }
-
-        let mysort = { };
-        //Sort
-        //  1 -> asc
-        // -1 -> desc
-        mysort[sortBy] = sortDirection === "" || sortDirection === undefined || sortDirection === "asc" ? 1 : -1;
-
+    static findAll(listOptions) {
         const db = getDb();
         const totalCount = db.collection(collectionName).find({}).count();
 
         return db.collection(collectionName)
-            .find({}, options)
-            .sort(mysort)
+            .find(listOptions.find, listOptions.options)
+            .sort(listOptions.sort)
             .toArray()
             .then(contacts => {
                 return {

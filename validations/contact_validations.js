@@ -26,6 +26,10 @@ const validateContactInput = (contactInput) => {
         errors.push({message: 'Email is required'});
     }
 
+    if (validator.isEmpty(contactInput.phoneNumber)) {
+        errors.push({message: 'Phone number is required'});
+    }
+
     if (!validator.isLength(contactInput.email, { min: 1, max: 70 })) {
         errors.push({message: 'Email allows from 1 to 70 characters'});
     }
@@ -34,12 +38,12 @@ const validateContactInput = (contactInput) => {
         errors.push({message: 'Name allows from 1 to 100 characters'});
     }
 
-    if (validator.isEmpty(contactInput.phoneNumber)) {
-        errors.push({message: 'Phone number is required'});
+    if (!validator.isLength(contactInput.address, { min: 1, max: 200 })) {
+        errors.push({message: 'Address allows from 1 to 200 characters'});
     }
 
     if (errors.length > 0) {
-        throwError(errors)
+        throwError(errors);
     }
 }
 
